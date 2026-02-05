@@ -5,19 +5,6 @@ This environment requires Python NumPy, SciPy, Matplotlib, HyperSpy and py4DSTEM
 ### Project Structure Directory
 
 
-├── assignment_01_setup.ipynb     
-├── assignment_02_setup.ipynb     
-├── raw_data/                     
-│   ├── Si-SiGe.dm4               
-│   ├── Diffraction SI_Au_Calib.dm4 
-│   └── example_EM_Image.tif      
-├── assignment_01_output/         
-├── assignment_02_output/         
-│   ├── figures/                  
-│   └── data/                     
-├── README.md
-└── .gitignore
-
 
 # Assignment02：
 Virtual Detectors allow you to "re-image" your sample after the experiment is finished, just as if you were still sitting at the microscope.
