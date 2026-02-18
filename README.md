@@ -25,7 +25,7 @@ This repository documents a comprehensive workflow for particle segmentation and
 
 ---
 
-## 1. Methodology (方法论)
+## 1. Methodology 
 
 The project explores three distinct paradigms for image analysis:
 
