@@ -1,0 +1,6 @@
+Method,Core Metric,Runtime,Labeling Effort,Interpretability
+Watershed,N/A,Very Fast,None,Geometric
+k-Means,Silhouette: 0.61,Fast,None,Statistical
+SVM (RBF),F1: 0.96,Fast,High (Class Labels),Medium
+Random Forest,F1: 1.00,Fast,High (Class Labels),High (Feature Importance)
+U-Net,IoU: 0.88,Very Slow (GPU),Highest (Pixel Masks),Medium (Feature Maps)

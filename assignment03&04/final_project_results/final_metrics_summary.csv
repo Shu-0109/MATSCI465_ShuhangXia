@@ -1,0 +1,4 @@
+Model_Name,Primary_Metric,Value,Dice_Score
+Random Forest,F1-Score,1.0,
+SVM,F1-Score,0.963,
+U-Net,IoU,0.8795,0.9359
