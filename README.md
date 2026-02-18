@@ -25,54 +25,58 @@ This repository documents a comprehensive workflow for particle segmentation and
 
 ---
 
-## 1. Methodology 
+## 1. Methodology
 
-The project explores three distinct paradigms for image analysis:
+The project explores four distinct paradigms for image analysis:
 
 * **Classical Computer Vision**: Utilizes **Otsu's Thresholding** for binarization and the **Watershed algorithm** to separate overlapping particles based on distance transforms.
-* **Machine Learning (ML)**: Extracts 10+ morphological descriptors (such as **Solidity**, **Circularity**, and **Eccentricity**) to train **Random Forest** and **SVM** classifiers.
-* **Deep Learning (DL)**: Implements a **U-Net** architecture. This encoder-decoder model uses skip connections to preserve high-resolution spatial details, enabling precise pixel-wise segmentation.
+* **Machine Learning (ML)**: Extracts morphological descriptors to train **Random Forest** and **SVM** classifiers to distinguish between particle size categories.
+* **CNN Classification**: Implements a lightweight **Convolutional Neural Network** with `GlobalAveragePooling2D` for binary classification (Small vs. Large particles).
+* **U-Net Segmentation**: Employs a **U-Net** architecture with an encoder-decoder structure and skip connections to achieve precise pixel-wise binary segmentation.
 
 
 
 ---
 
-## 2. Quantitative Comparison 
+## 2. Quantitative Comparison
 
-The following table summarizes the performance based on our experimental results:
+The following table summarizes the performance metrics based on the experimental results recorded in the notebook:
 
 | Method | Evaluation Metric | Result | Runtime | Data Requirement |
 | :--- | :--- | :--- | :--- | :--- |
-| **Watershed** | Segmentation Quality | N/A | **Instant** | None (Unsupervised) |
+| **Watershed** | Segmentation Quality | N/A | **Instant** | Unsupervised |
 | **SVM** | Classification F1-Score | **0.9630** | Fast | High (Class Labels) |
 | **Random Forest** | Classification F1-Score | **1.0000** | Fast | High (Class Labels) |
+| **CNN** | Classification F1-Score | **0.8889** | Moderate | High (Class Labels) |
 | **U-Net** | Segmentation IoU | **0.8795** | Slow (GPU) | Highest (Pixel Masks) |
 
-*Note: The U-Net model also achieved a **Dice Coefficient of 0.9359**, indicating excellent overlap with ground truth masks.*
+*Note: The U-Net model additionally achieved a **Dice Coefficient of 0.9359**.*
 
 ---
 
-## 3. Key Findings & Interpretability 
+## 3. Key Findings & Interpretability
 
-* **Feature Importance**: In the Random Forest model, **Solidity** was identified as a critical feature, suggesting that the "fullness" of a particle is a primary differentiator between size classes.
-* **Feature Maps**: Visualizing U-Net intermediate layers confirms that the encoder captures edge gradients in early stages (`conv2d_3`), while the skip connections (`concatenate_2`) successfully restore boundary details during upsampling.
-* **Model Robustness**: While traditional Watershed is efficient, **U-Net** is significantly more robust against noisy backgrounds and low-contrast boundaries common in real-world microscopy.
+* **Feature Importance**: In the Random Forest model, **Solidity** and **Circularity** were identified as critical descriptors, suggesting that shape characteristics are primary differentiators for particle classification.
+* **Deep Learning Visualization**: 
+    * **CNN**: The model successfully learned to classify particles with an F1-score of ~0.89 using basic convolutional blocks.
+    * **U-Net**: Feature maps confirm that early layers (`conv2d_3`) capture edge gradients, while skip connections (`concatenate_2`) restore spatial resolution during upsampling.
+* **Model Trade-offs**: While traditional Watershed is efficient, deep learning methods (CNN/U-Net) offer superior robustness against noisy backgrounds and complex particle overlaps.
 
 
 
 ---
 
-## 4. Recommended Use-Cases 
+## 4. Recommended Use-Cases
 
-* **Classical (Watershed)**: Best for high-contrast images where particles are clearly defined and separated.
-* **Machine Learning (RF/SVM)**: Ideal when interpretability is needed to understand the physical/geometric factors driving classification.
-* **Deep Learning (U-Net)**: Mandatory for complex datasets with low SNR (Signal-to-Noise Ratio) or significant particle overlap.
+* **Classical (Watershed)**: Recommended for high-contrast images where particles are clearly separated and real-time processing is required.
+* **Machine Learning (RF/SVM)**: Ideal when interpretability is needed to understand the physical and geometric factors driving the classification.
+* **Deep Learning (CNN/U-Net)**: Mandatory for complex datasets with low signal-to-noise ratios or significant particle overlap where automated feature extraction is necessary.
 
 
 
 ---
 
 ## 5. How to Run
-1.  Ensure all dependencies are installed: `pip install -r requirements.txt`.
-2.  Update the `IMAGE_DIR` path in the notebook to point to your `raw_data` folder.
-3.  Run the cells in `assignment_04_combined.ipynb` sequentially to reproduce the pipeline and plots.
+1. Ensure all dependencies are installed: `pip install -r requirements.txt`.
+2. Update the `IMAGE_DIR` path in the notebook to match your local dataset location.
+3. Execute the cells in `assignment_04_combined.ipynb` sequentially to reproduce the pipeline and plots.
