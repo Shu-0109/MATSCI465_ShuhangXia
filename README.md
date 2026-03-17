@@ -80,3 +80,37 @@ The following table summarizes the performance metrics based on the experimental
 1. Ensure all dependencies are installed: `pip install -r requirements.txt`.
 2. Update the `IMAGE_DIR` path in the notebook to match your local dataset location.
 3. Execute the cells in `assignment_04_combined.ipynb` sequentially to reproduce the pipeline and plots.
+
+
+
+
+# Assignment05&06：HRTEM Simulation of $Si_3N_4$ using abTEM
+
+This project simulates **High-Resolution Transmission Electron Microscopy (HRTEM)** images of a $\beta\text{-Si}_3\text{N}_4$ crystal using the **Multislice Algorithm**. It explores the physics of electron scattering, lens aberrations, and quantum noise.
+
+## 🚀 Key Features
+
+* **Structure Modeling:** Orthogonalization of the $Si_3N_4$ unit cell for FFT-based propagation.
+* **Multislice Physics:** Accounting for **Dynamical Diffraction** (multiple scattering) in a 5 nm thick specimen.
+* **CTF Optimization:** Comparison between **Uncorrected** (high $C_s$) and **Aberration-Corrected** imaging conditions.
+* **Realistic Noise:** Implementation of **Poisson Noise** to simulate low-dose experimental conditions ($100 \ e^-/Å^2$).
+
+## 🔬 Core Concepts
+
+### 1. Multislice 
+For a 5 nm sample, a simple projected potential is insufficient. The multislice method recursively calculates the wave function $\psi$ through successive layers:
+$$\psi_{n+1} = \mathcal{P} \otimes (\mathcal{T} \cdot \psi_n)$$
+where $\mathcal{T}$ is the transmission (phase shift) and $\mathcal{P}$ is the Fresnel propagation.
+
+
+
+### 2. Contrast Transfer Function (CTF)
+The CTF determines how spatial frequencies (atomic details) are transferred to the image. Aberration correction flattens the phase function $\chi(q)$, widening the "passband" for sharper atomic columns.
+
+
+
+## 🛠 Setup & Requirements
+
+* **Language:** Python 3.11+
+* **Packages:** `abtem`（≥1.0.0beta34）, `ase`, `matplotlib`
+* **Compatibility Note:** Use **NumPy < 2.0** to avoid `AttributeError` from deprecated `np.product` calls within the `abtem` noise module.
